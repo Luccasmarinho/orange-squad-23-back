@@ -1,11 +1,12 @@
 const createProjectService = require("../../services/project/create-project-service");
+const { messageJson } = require("../../utils/utils");
 
 const createProjectController = async (req, res) => {
   try {
     const newProject = await createProjectService(req.body);
-    res.status(201).send(newProject);
+    messageJson(res, 201, newProject)
   } catch (error) {
-    res.status(400).send(error);
+    messageJson(res, 400, error)
   }
 };
 
