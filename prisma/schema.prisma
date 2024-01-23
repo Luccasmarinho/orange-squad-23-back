@@ -20,3 +20,18 @@ model Users {
 
   @@map("users")
 }
+
+model Projects {
+  id Int @id @default(autoincrement())
+
+  title        String
+  tags         String @unique
+  link         String
+  description  String
+  projectCover String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("projects")
+}
