@@ -11,6 +11,7 @@ const listAllProjectsService = async () => {
       projectCover: true,
     },
   });
+
   return allProjects;
 };
 
