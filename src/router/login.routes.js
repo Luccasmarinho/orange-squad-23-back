@@ -3,12 +3,8 @@ const router = express.Router();
 
 const controller = require("../controllers/user/auth-user-controller");
 const validateBody = require("../middlewares/validate-body");
-const schema = require("../schemas/schema-login");
+const loginSchema = require("../schemas/user/schema-login");
 
-router.post(
-    "/login", 
-    validateBody(schema.login),
-    controller.login,
-);
+router.post("/login", validateBody(loginSchema.login), controller.login);
 
-module.exports = router
+module.exports = router;

@@ -1,13 +1,13 @@
 const utils = {
-    messageJson: (objRes, status, Mensagem) => {
-        if (typeof Mensagem == "string") return objRes.status(status).json({ Mensagem })
+  messageJson: (objRes, status, msg) => {
+    if (typeof msg == "string") return objRes.status(status).json({ msg });
 
-        const msgJson = !Mensagem
-        ? objRes.status(status).json()
-        : objRes.status(status).json(Mensagem)
+    const msgJson = !msg
+      ? objRes.status(status).json()
+      : objRes.status(status).json(msg);
 
-        return msgJson
-    }
+    return msgJson;
+  },
 };
 
-module.exports = utils
+module.exports = utils;
