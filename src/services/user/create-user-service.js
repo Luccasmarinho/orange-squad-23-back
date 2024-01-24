@@ -1,21 +1,32 @@
+const AppError = require("../../errors/app-errors");
 const prismaClient = require("../../prisma/prisma-client");
 const { hash } = require("bcryptjs");
 
 const createUserService = async (data) => {
-    const { password, secondName, email, name } = data
+  const { password, secondName, email, name } = data;
 
-    const passwordEncrypted = await hash(password, 10);
+  const checkIfUserExist = await prismaClient.users.findFirst({
+    where: {
+      email,
+    },
+  });
 
-    const createUser = await prismaClient.users.create({
-        data: {
-            password: passwordEncrypted,
-            secondName,
-            email,
-            name
-        },
-    })
+  if (checkIfUserExist) {
+    throw new AppError("A user with this email already exist");
+  }
 
-    return createUser
-}
+  const passwordEncrypted = await hash(password, 10);
 
-module.exports = createUserService
+  const createUser = await prismaClient.users.create({
+    data: {
+      password: passwordEncrypted,
+      secondName,
+      email,
+      name,
+    },
+  });
+
+  return createUser;
+};
+
+module.exports = createUserService;

@@ -1,16 +1,15 @@
-const { messageJson } = require("../../utils/utils");
 const createUserService = require("../../services/user/create-user-service");
 
 const controller = {
-    createUser: async (req, res) => {
-        try {
-            const createUser = await createUserService(req.body)
-            return messageJson(res, 200, createUser)
-        } catch (error) {
-            console.log(error)
-            return messageJson(res, 500, "Erro interno do servidor")
-        }
+  createUser: async (req, res) => {
+    try {
+      const createUser = await createUserService(req.body);
+      res.status(201).send(createUser);
+    } catch (error) {
+      console.log(error);
+      res.status(400).send(error);
     }
+  },
 };
 
-module.exports = controller
+module.exports = controller;
