@@ -1,11 +1,13 @@
-const { messageJson } = require("../../utils/utils");
+const loginService = require("../../services/user/auth-user-service");
 
 const controller = {
     login: async (req, res) => {
         try {
-            messageJson(res, 200, "ok")
+            const login = await loginService(req.body)
+            res.status(400).send(login);
         } catch (error) {
-            messageJson(res, 500, "Erro interno do servidor")
+            console.log(error)
+            res.status(400).send(error);
         }
     }
 };
