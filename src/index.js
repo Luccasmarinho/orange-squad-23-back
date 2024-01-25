@@ -1,8 +1,7 @@
 require("express-async-errors");
 const express = require("express");
 const cors = require("cors");
-const projectRouter = require("./router/projects.routes");
-const userRouter = require("./router/user.routes");
+const router = require("./router/export/export.routes");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -10,8 +9,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.use(projectRouter);
-app.use(userRouter);
+app.use(router);
 app.use((err, req, res, next) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
