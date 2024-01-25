@@ -1,12 +1,14 @@
-const listAllProjectsService = require("../../services/project/list-project-service");
+const listAllUserProjectsService = require("../../services/project/list-project-service");
 
-const listAllProjectsController = async (req, res) => {
+const listAllUserProjectsController = async (req, res) => {
+  const userId = req.userId;
+
   try {
-    const listAllProjects = await listAllProjectsService();
-    res.status(200).send(listAllProjects);
+    const listAllUserProjects = await listAllUserProjectsService(userId);
+    res.status(200).send(listAllUserProjects);
   } catch (error) {
     res.status(400).send(error);
   }
 };
 
-module.exports = listAllProjectsController;
+module.exports = listAllUserProjectsController;

@@ -1,7 +1,10 @@
 const prismaClient = require("../../prisma/prisma-client");
 
-const listAllProjectsService = async () => {
-  const allProjects = await prismaClient.projects.findMany({
+const listAllUserProjectsService = async (userId) => {
+  const allUserProjects = await prismaClient.projects.findMany({
+    where: {
+      userId: userId,
+    },
     select: {
       id: true,
       title: true,
@@ -12,7 +15,7 @@ const listAllProjectsService = async () => {
     },
   });
 
-  return allProjects;
+  return allUserProjects;
 };
 
-module.exports = listAllProjectsService;
+module.exports = listAllUserProjectsService;
