@@ -16,11 +16,12 @@ const tokenAutentication = async (req, res, next) => {
 
     next();
   } catch (error) {
-    if (error.message == "invalid signature") {
-      return messageJson(res, 401, "Unauthorized");
-    } else {
-      return messageJson(res, 401, "Unauthorized");
-    }
+    const msgError =
+      error.message == "invalid signature"
+        ? messageJson(res, 401, "Unauthorized")
+        : messageJson(res, 401, "Unauthorized");
+
+    return msgError;
   }
 };
 
