@@ -1,7 +1,7 @@
 const AppError = require("../../errors/app-errors");
 const prismaClient = require("../../prisma/prisma-client");
 
-const createProjectService = async (data) => {
+const createProjectService = async (userId, data) => {
   const { tags } = data;
 
   const checkIfProjectExist = await prismaClient.projects.findFirst({
@@ -15,7 +15,14 @@ const createProjectService = async (data) => {
   }
 
   const newProject = await prismaClient.projects.create({
-    data,
+    data: {
+      userId: userId,
+      title: data.title,
+      tags: data.tags,
+      link: data.link,
+      description: data.description,
+      projectCover: data.projectCover,
+    },
   });
 
   return newProject;

@@ -1,9 +1,10 @@
 const prismaClient = require("../../prisma/prisma-client");
 
-const deleteProjectService = async (id) => {
+const deleteProjectService = async (userId, id) => {
   const deletedProject = await prismaClient.projects.delete({
     where: {
       id,
+      userId: userId,
     },
   });
 

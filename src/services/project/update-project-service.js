@@ -1,10 +1,11 @@
 const AppError = require("../../errors/app-errors");
 const prismaClient = require("../../prisma/prisma-client");
 
-const updateProjectService = async (id, data) => {
+const updateProjectService = async (userId, id, data) => {
   const checkIfProjectExist = await prismaClient.projects.findFirst({
     where: {
       id,
+      userId: userId,
     },
   });
 
@@ -15,6 +16,7 @@ const updateProjectService = async (id, data) => {
   const updateProject = await prismaClient.projects.update({
     where: {
       id,
+      userId: userId,
     },
     data,
     select: {
