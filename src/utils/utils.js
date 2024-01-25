@@ -1,10 +1,10 @@
 const utils = {
-  messageJson: (objRes, status, msg) => {
-    if (typeof msg == "string") return objRes.status(status).json({ msg });
+  messageJson: (objRes, statusCode, msg) => {
+    if (typeof msg == "string") return objRes.status(statusCode).json({ msg, statusCode });
 
     const msgJson = !msg
-      ? objRes.status(status).json()
-      : objRes.status(status).json(msg);
+      ? objRes.status(statusCode).json()
+      : objRes.status(statusCode).json(msg);
 
     return msgJson;
   },
