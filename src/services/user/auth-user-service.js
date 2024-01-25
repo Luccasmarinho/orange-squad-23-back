@@ -28,7 +28,6 @@ const loginService = async (data) => {
   delete checkEmailExist.password
 
   const userLogin = {
-    user: checkEmailExist,
     token
   }
 
