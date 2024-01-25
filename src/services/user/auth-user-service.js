@@ -6,32 +6,32 @@ const jwt = require("jsonwebtoken");
 const loginService = async (data) => {
   const { email, password } = data;
 
-  const checkEmailExist = await prismaClient.users.findFirst({
+  const checkIfUserExist = await prismaClient.users.findFirst({
     where: {
       email,
     },
   });
 
-  if (!checkEmailExist) {
+  if (!checkIfUserExist) {
     throw new AppError("A user with this email does not exist");
   } else {
-    const truePassword = await compare(password, checkEmailExist.password);
+    const truePassword = await compare(password, checkIfUserExist.password);
 
-    if(!truePassword) {
-        throw new AppError("Incorret password");
+    if (!truePassword) {
+      throw new AppError("Incorret email or password");
     }
-  };
-
-  const payload = { id: checkEmailExist.id }
-  const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: "24h" });
-
-  delete checkEmailExist.password
-
-  const userLogin = {
-    token
   }
 
-  return userLogin
+  const payload = { id: checkIfUserExist.id };
+  const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: "24h" });
+
+  delete checkIfUserExist.password;
+
+  const userLogin = {
+    token,
+  };
+
+  return userLogin;
 };
 
 module.exports = loginService;
