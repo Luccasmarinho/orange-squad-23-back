@@ -8,10 +8,15 @@ const validateBody = require("../middlewares/validate-body");
 const createProjectSchema = require("../schemas/project/schema-project");
 const tokenAutentication = require("../middlewares/token-autenticate");
 const updateProjectSchema = require("../schemas/project/update-schema-project");
+const multer = require("multer");
+const uploadConfig = require("../config/multer");
+
+const upload = multer(uploadConfig);
 
 projectRouter.post(
   "/project",
   tokenAutentication,
+  upload.single("file"),
   validateBody(createProjectSchema.project),
   createProjectController
 );
