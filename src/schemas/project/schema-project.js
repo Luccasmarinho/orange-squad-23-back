@@ -6,7 +6,7 @@ const createProjectSchema = {
     tags: joi.string().required(),
     link: joi.string().required(),
     description: joi.string().required(),
-    projectCover: joi.string().required(),
+    projectCover: joi.string(),
   }),
 };
 
