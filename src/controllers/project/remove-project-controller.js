@@ -8,9 +8,9 @@ const deleteProjectController = async (req, res) => {
       userId,
       Number(req.params.id)
     );
-    res.status(204).send(deletedProject);
+    return res.status(204).send(deletedProject);
   } catch (error) {
-    res.status(400).send(error);
+    return res.status(400).send(error);
   }
 };
 
