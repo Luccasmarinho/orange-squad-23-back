@@ -9,9 +9,9 @@ const updateProjectController = async (req, res) => {
   } else {
     try {
       await updateProjectService(userId, Number(req.params.id), req.body);
-      res.status(200).send({ msg: "Project updated sucessfully" });
+      return res.status(200).send({ msg: "Project updated sucessfully" });
     } catch (error) {
-      res.status(400).send(error);
+      return res.status(400).send(error);
     }
   }
 };

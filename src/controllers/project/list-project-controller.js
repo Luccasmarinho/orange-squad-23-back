@@ -5,9 +5,9 @@ const listAllUserProjectsController = async (req, res) => {
 
   try {
     const listAllUserProjects = await listAllUserProjectsService(userId);
-    res.status(200).send(listAllUserProjects);
+    return res.status(200).send(listAllUserProjects);
   } catch (error) {
-    res.status(400).send(error);
+    return res.status(400).send(error);
   }
 };
 

@@ -9,9 +9,9 @@ const createProjectController = async (req, res) => {
     const { originalname, filename: projectCover } = req.file;
     try {
       await createProjectService(userId, req.body, projectCover);
-      res.status(201).send({ msg: "Project created sucessfully" });
+      return res.status(201).send({ msg: "Project created sucessfully" });
     } catch (error) {
-      res.status(400).send(error);
+      return res.status(400).send(error);
     }
   }
 };
