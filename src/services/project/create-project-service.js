@@ -21,7 +21,7 @@ const createProjectService = async (userId, data) => {
       tags: data.tags,
       link: data.link,
       description: data.description,
-      projectCover: data.projectCover,
+      projectCover: `/tmp/${data.projectCover}`,
     },
   });
 

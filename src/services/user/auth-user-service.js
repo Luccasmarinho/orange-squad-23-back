@@ -13,12 +13,14 @@ const loginService = async (data) => {
   });
 
   if (!checkIfUserExist) {
-    throw new AppError("A user with this email does not exist");
+    throw new AppError.UnauthorizedError(
+      "A user with this email does not exist"
+    );
   } else {
     const truePassword = await compare(password, checkIfUserExist.password);
 
     if (!truePassword) {
-      throw new AppError("Incorret email or password");
+      throw new AppError.UnauthorizedError("Incorrect email or password");
     }
   }
 

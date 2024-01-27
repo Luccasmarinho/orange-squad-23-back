@@ -11,6 +11,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(router);
+app.use("/tmp", express.static("tmp"));
 app.use((err, req, res, next) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
