@@ -25,7 +25,7 @@ const updateProjectService = async (userId, id, data) => {
       tags: true,
       link: true,
       description: true,
-      projectCover: true,
+      projectCover: `/tmp/${data.projectCover}`,
     },
   });
 
