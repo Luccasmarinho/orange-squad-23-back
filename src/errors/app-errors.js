@@ -5,4 +5,11 @@ class AppError {
   }
 }
 
-module.exports = AppError;
+class UnauthorizedError {
+  constructor(msg, statusCode = 401) {
+    this.msg = msg;
+    this.statusCode = statusCode;
+  }
+}
+
+module.exports = { AppError, UnauthorizedError };

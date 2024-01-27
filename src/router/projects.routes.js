@@ -17,7 +17,7 @@ projectRouter.post(
   "/project",
   tokenAutentication,
   upload.single("file"),
-  validateBody(createProjectSchema.project),
+  validateBody(createProjectSchema.createProject),
   createProjectController
 );
 projectRouter.get(
@@ -28,6 +28,7 @@ projectRouter.get(
 projectRouter.put(
   "/project/:id",
   tokenAutentication,
+  upload.single("file"),
   validateBody(updateProjectSchema.updateProject),
   updateProjectController
 );

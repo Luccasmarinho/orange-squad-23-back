@@ -10,7 +10,7 @@ const updateProjectService = async (userId, id, data) => {
   });
 
   if (!checkIfProjectExist) {
-    throw new AppError("Project not found to update");
+    throw new AppError.AppError("Project not found to update");
   }
 
   const updateProject = await prismaClient.projects.update({
@@ -25,7 +25,7 @@ const updateProjectService = async (userId, id, data) => {
       tags: true,
       link: true,
       description: true,
-      projectCover: true,
+      projectCover: `/tmp/${data.projectCover}`,
     },
   });
 

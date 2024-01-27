@@ -12,7 +12,7 @@ const createUserService = async (data) => {
   });
 
   if (checkIfUserExist) {
-    throw new AppError("A user with this email already exist");
+    throw new AppError.AppError("A user with this email already exist");
   }
 
   const passwordEncrypted = await hash(password, 10);
