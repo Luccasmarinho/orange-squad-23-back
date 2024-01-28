@@ -1,0 +1,182 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Squad-23",
+        "description": "Adicionar uma descrição",
+        "termsOfService": "http://localhost:3000/terms",
+        "contact": {
+            "email": "email@email.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/",
+            "description": "API de teste"
+        }
+    ],
+    "paths": {
+        "/register": {
+            "post": {
+                "sumary": "Cadastro de usuário",
+                "description": "Essa rota será responsável por cadastrar um novo usuário",
+                "tags": ["user"],
+                "requestBody": {
+                   "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/user"
+                            },
+                            "examples": {
+                                "register": {
+                                    "value": {
+                                        "name": "Antônio",
+                                        "secondName": "Lima",
+                                        "email": "antonio@lima.com.br",
+                                        "password": "Antonio123"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "A user with this email already exist",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "examples": {
+                                    "emailAlreadyExist": {
+                                        "sumary": "A user with this email already exist",
+                                        "value": {
+                                            "msg": "A user with this email already exist",
+                                            "statusCode": 400
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "User registered sucessfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "examples": {
+                                    "userCreated": {
+                                        "sumary": "User registered sucessfully",
+                                        "value": {
+                                            "msg": "User registered sucessfully"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "sumary": "Login",
+                "description": "Essa rota efetua o Login e retorna um JWT.",
+                "tags": ["login"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/login"
+                            },
+                            "examples": {
+                                "login": {
+                                    "value": {
+                                        "email": "antonio@lima.com.br",
+                                        "password": "Antonio123"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "A user with this email does not exist or password incorrect",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "emailNotFound": {
+                                        "sumary": "User not found",
+                                        "value": {
+                                            "msg": "A user with this email does not exist.",
+                                            "statusCode": 401
+                                        }
+                                    },
+                                    "passwordIncorrect": {
+                                        "sumary": "Another reason for 401 error",
+                                        "value": {
+                                            "msg": "Incorrect email or password",
+                                            "statusCode": 401
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "examples": {
+                                    "userLogged": {
+                                        "value": {
+                                            "token": "eyJgbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpFCI6NDMsImlhdCI6MTcwNjE0OTQ3MiwiZXhwIjoxNza2MjM1ODcyfQ.aB4b4wHlCjbLBIDAIRe_wU9pn4nC0f3u3a5MioXPtUI"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "user": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "secondName": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "login": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
