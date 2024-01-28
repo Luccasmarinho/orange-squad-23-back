@@ -3,7 +3,7 @@ const prismaClient = require("../../prisma/prisma-client");
 const { hash } = require("bcryptjs");
 
 const createUserService = async (data) => {
-  const { password, secondName, email, name } = data;
+  const { password, secondName, email, name, userImage } = data;
 
   const checkIfUserExist = await prismaClient.users.findFirst({
     where: {
@@ -23,6 +23,7 @@ const createUserService = async (data) => {
       secondName,
       email,
       name,
+      userImage,
     },
   });
 

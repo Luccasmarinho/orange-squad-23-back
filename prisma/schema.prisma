@@ -12,8 +12,9 @@ model Users {
 
   name       String
   secondName String
-  email      String @unique
+  email      String  @unique
   password   String
+  userImage  String?
 
   projects Projects[]
 
