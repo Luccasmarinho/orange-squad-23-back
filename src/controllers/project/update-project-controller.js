@@ -1,4 +1,4 @@
-const { AppError } = require("../../errors/app-errors");
+const AppError = require("../../errors/app-errors");
 const updateProjectService = require("../../services/project/update-project-service");
 
 const updateProjectController = async (req, res) => {
