@@ -12,9 +12,9 @@ model Users {
 
   name       String
   secondName String
-  email      String  @unique
+  email      String @unique
   password   String
-  userImage  String?
+  userImage  String @default("/tmp/imgavatar.png")
 
   projects Projects[]
 

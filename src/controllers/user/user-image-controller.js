@@ -7,12 +7,13 @@ const uploadUserImageController = async (req, res) => {
   if (!req.file) {
     throw new AppError.AppError("Error no image");
   } else {
-    const { originalname, filename: userImage } = req.file;
-
     try {
+      const { originalname, filename: userImage } = req.file;
+
       await uploadUserImageService(userId, userImage);
       return res.status(200).send({ msg: "Image uploaded sucessfully" });
     } catch (error) {
+      console.log("teste");
       return res.status(400).send(error);
     }
   }

@@ -8,7 +8,14 @@ const updateProjectController = async (req, res) => {
     throw new AppError.AppError("Error no image");
   } else {
     try {
-      await updateProjectService(userId, Number(req.params.id), req.body);
+      const { originalname, filename: projectCover } = req.file;
+
+      await updateProjectService(
+        userId,
+        Number(req.params.id),
+        req.body,
+        projectCover
+      );
       return res.status(200).send({ msg: "Project updated sucessfully" });
     } catch (error) {
       return res.status(400).send(error);

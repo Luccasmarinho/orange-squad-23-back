@@ -9,6 +9,7 @@ const tokenAutentication = require("../middlewares/token-autenticate");
 const uploadUserImageController = require("../controllers/user/user-image-controller");
 const multer = require("multer");
 const uploadConfig = require("../config/multer");
+const updateUserImageSchema = require("../schemas/user/update-user-image-schema");
 
 const upload = multer(uploadConfig);
 
@@ -24,6 +25,7 @@ userRouter.put(
   "/uploadImage",
   tokenAutentication,
   upload.single("file"),
+  validateBody(updateUserImageSchema.updateUserImage),
   uploadUserImageController
 );
 
