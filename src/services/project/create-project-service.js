@@ -1,7 +1,7 @@
 const AppError = require("../../errors/app-errors");
 const prismaClient = require("../../prisma/prisma-client");
 
-const createProjectService = async (userId, data) => {
+const createProjectService = async (userId, data, projectCover) => {
   const { tags } = data;
 
   const checkIfProjectExist = await prismaClient.projects.findFirst({
@@ -21,7 +21,7 @@ const createProjectService = async (userId, data) => {
       tags: data.tags,
       link: data.link,
       description: data.description,
-      projectCover: `/tmp/${data.projectCover}`,
+      projectCover: `/tmp/${projectCover}`,
     },
   });
 

@@ -1,7 +1,7 @@
 const AppError = require("../../errors/app-errors");
 const prismaClient = require("../../prisma/prisma-client");
 
-const updateProjectService = async (userId, id, data) => {
+const updateProjectService = async (userId, id, data, projectCover) => {
   const checkIfProjectExist = await prismaClient.projects.findFirst({
     where: {
       id,
@@ -18,14 +18,20 @@ const updateProjectService = async (userId, id, data) => {
       id,
       userId: userId,
     },
-    data,
+    data: {
+      title: data.title,
+      tags: data.tags,
+      link: data.link,
+      description: data.description,
+      projectCover: `/tmp/${projectCover}`,
+    },
     select: {
       id: true,
       title: true,
       tags: true,
       link: true,
       description: true,
-      projectCover: `/tmp/${data.projectCover}`,
+      projectCover: `/tmp/${projectCover}`,
     },
   });
 
