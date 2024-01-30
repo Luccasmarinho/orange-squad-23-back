@@ -145,6 +145,102 @@
                     }
                 }
             }
+        },
+        "/project": {
+            "post": {
+                "sumary": "Cadastro de projeto",
+                "description": "Essa rota efetua a criação de um projeto.",
+                "tags": ["project"],
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/project"
+                            },
+                            "examples": {
+                                "project": {
+                                    "value": {
+                                        "title": "Projeto Orange",
+                                        "tags": "orange",
+                                        "link": "www.projetoorange.com.br",
+                                        "description": "Nosso projeto na orange",
+                                        "projectCover": {
+                                            "file": "Arquivo de imagem."
+                                        }
+                                        
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Project created sucessfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "examples": {
+                                    "projectCreated": {
+                                        "sumary": "Project created sucessfully",
+                                        "value": {
+                                            "msg": "Project created sucessfully"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "A project with this tag already exist",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "examples": {
+                                    "tagAlreadyExist": {
+                                        "sumary": "A project with this tag already exist",
+                                        "value": {
+                                            "msg": "A project with this tag already exist",
+                                            "statusCode": 400
+                                        }
+                                    },
+                                    "ErrorNoImage": {
+                                        "sumary": "Error no image",
+                                        "value": {
+                                            "msg": "Error no image",
+                                            "statusCode": 400
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "examples": {
+                                    "invalidToken": {
+                                        "sumary": "no token or invalid token",
+                                        "value": {
+                                            "msg": "Unauthorized",
+                                            "statusCode": 401
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -176,6 +272,35 @@
                         "type": "string"
                     }
                 }
+            },
+            "project": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "tags": {
+                        "type": "string"
+                    },
+                    "link": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "projectCover": {
+                        "type": "string",
+                        "format": "binary",
+                        "description": "Arquivo de foto a ser enviado."
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
             }
         }
     }

@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cors());
 app.use(router);
 app.use("/tmp", express.static("tmp"));
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use((err, req, res, next) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
