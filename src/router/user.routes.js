@@ -10,6 +10,7 @@ const uploadUserImageController = require("../controllers/user/user-image-contro
 const multer = require("multer");
 const uploadConfig = require("../config/multer");
 const updateUserImageSchema = require("../schemas/user/update-user-image-schema");
+const refreshUserTokenController = require("../controllers/user/refresh-user-token-controller");
 
 const upload = multer(uploadConfig);
 
@@ -27,6 +28,12 @@ userRouter.put(
   upload.single("file"),
   validateBody(updateUserImageSchema.updateUserImage),
   uploadUserImageController
+);
+
+userRouter.post(
+  "/refreshToken",
+  tokenAutentication,
+  refreshUserTokenController
 );
 
 module.exports = userRouter;
