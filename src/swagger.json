@@ -1,307 +1,345 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-        "title": "API Squad-23",
-        "description": "Adicionar uma descrição",
-        "termsOfService": "http://localhost:3000/terms",
-        "contact": {
-            "email": "email@email.com"
-        },
-        "version": "1.0.0"
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Squad-23",
+    "description": "Adicionar uma descrição",
+    "termsOfService": "http://localhost:3000/terms",
+    "contact": {
+      "email": "email@email.com"
     },
-    "servers": [
-        {
-            "url": "http://localhost:3000/",
-            "description": "API de teste"
-        }
-    ],
-    "paths": {
-        "/register": {
-            "post": {
-                "sumary": "Cadastro de usuário",
-                "description": "Essa rota será responsável por cadastrar um novo usuário",
-                "tags": ["user"],
-                "requestBody": {
-                   "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/user"
-                            },
-                            "examples": {
-                                "register": {
-                                    "value": {
-                                        "name": "Antônio",
-                                        "secondName": "Lima",
-                                        "email": "antonio@lima.com.br",
-                                        "password": "Antonio123"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "400": {
-                        "description": "A user with this email already exist",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object"
-                                },
-                                "examples": {
-                                    "emailAlreadyExist": {
-                                        "sumary": "A user with this email already exist",
-                                        "value": {
-                                            "msg": "A user with this email already exist",
-                                            "statusCode": 400
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "201": {
-                        "description": "User registered sucessfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object"
-                                },
-                                "examples": {
-                                    "userCreated": {
-                                        "sumary": "User registered sucessfully",
-                                        "value": {
-                                            "msg": "User registered sucessfully"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/login": {
-            "post": {
-                "sumary": "Login",
-                "description": "Essa rota efetua o Login e retorna um JWT.",
-                "tags": ["login"],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/login"
-                            },
-                            "examples": {
-                                "login": {
-                                    "value": {
-                                        "email": "antonio@lima.com.br",
-                                        "password": "Antonio123"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "401": {
-                        "description": "A user with this email does not exist or password incorrect",
-                        "content": {
-                            "application/json": {
-                                "examples": {
-                                    "emailNotFound": {
-                                        "sumary": "User not found",
-                                        "value": {
-                                            "msg": "A user with this email does not exist.",
-                                            "statusCode": 401
-                                        }
-                                    },
-                                    "passwordIncorrect": {
-                                        "sumary": "Another reason for 401 error",
-                                        "value": {
-                                            "msg": "Incorrect email or password",
-                                            "statusCode": 401
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "200": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object"
-                                },
-                                "examples": {
-                                    "userLogged": {
-                                        "value": {
-                                            "token": "eyJgbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpFCI6NDMsImlhdCI6MTcwNjE0OTQ3MiwiZXhwIjoxNza2MjM1ODcyfQ.aB4b4wHlCjbLBIDAIRe_wU9pn4nC0f3u3a5MioXPtUI"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/project": {
-            "post": {
-                "sumary": "Cadastro de projeto",
-                "description": "Essa rota efetua a criação de um projeto.",
-                "tags": ["project"],
-                "security": [{ "bearerAuth": [] }],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/project"
-                            },
-                            "examples": {
-                                "project": {
-                                    "value": {
-                                        "title": "Projeto Orange",
-                                        "tags": "orange",
-                                        "link": "www.projetoorange.com.br",
-                                        "description": "Nosso projeto na orange",
-                                        "projectCover": {
-                                            "file": "Arquivo de imagem."
-                                        }
-                                        
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Project created sucessfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object"
-                                },
-                                "examples": {
-                                    "projectCreated": {
-                                        "sumary": "Project created sucessfully",
-                                        "value": {
-                                            "msg": "Project created sucessfully"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "A project with this tag already exist",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object"
-                                },
-                                "examples": {
-                                    "tagAlreadyExist": {
-                                        "sumary": "A project with this tag already exist",
-                                        "value": {
-                                            "msg": "A project with this tag already exist",
-                                            "statusCode": 400
-                                        }
-                                    },
-                                    "ErrorNoImage": {
-                                        "sumary": "Error no image",
-                                        "value": {
-                                            "msg": "Error no image",
-                                            "statusCode": 400
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object"
-                                },
-                                "examples": {
-                                    "invalidToken": {
-                                        "sumary": "no token or invalid token",
-                                        "value": {
-                                            "msg": "Unauthorized",
-                                            "statusCode": 401
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    },
-    "components": {
-        "schemas": {
-            "user": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "secondName": {
-                        "type": "string"
-                    },
-                    "email": {
-                        "type": "string"
-                    },
-                    "password": {
-                        "type": "string"
-                    }
-                }
-            },
-            "login": {
-                "type": "object",
-                "properties": {
-                    "email": {
-                        "type": "string"
-                    },
-                    "password": {
-                        "type": "string"
-                    }
-                }
-            },
-            "project": {
-                "type": "object",
-                "properties": {
-                    "title": {
-                        "type": "string"
-                    },
-                    "tags": {
-                        "type": "string"
-                    },
-                    "link": {
-                        "type": "string"
-                    },
-                    "description": {
-                        "type": "string"
-                    },
-                    "projectCover": {
-                        "type": "string",
-                        "format": "binary",
-                        "description": "Arquivo de foto a ser enviado."
-                    }
-                }
-            }
-        },
-        "securitySchemes": {
-            "bearerAuth": {
-                "type": "http",
-                "scheme": "bearer",
-                "bearerFormat": "JWT"
-            }
-        }
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/",
+      "description": "API de teste"
     }
+  ],
+  "paths": {
+    "/register": {
+      "post": {
+        "sumary": "Cadastro de usuário",
+        "description": "Essa rota será responsável por cadastrar um novo usuário",
+        "tags": ["user"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/user"
+              },
+              "examples": {
+                "register": {
+                  "value": {
+                    "name": "Antônio",
+                    "secondName": "Lima",
+                    "email": "antonio@lima.com.br",
+                    "password": "Antonio123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "A user with this email already exist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "examples": {
+                  "emailAlreadyExist": {
+                    "sumary": "A user with this email already exist",
+                    "value": {
+                      "msg": "A user with this email already exist",
+                      "statusCode": 400
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "User registered sucessfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "examples": {
+                  "userCreated": {
+                    "sumary": "User registered sucessfully",
+                    "value": {
+                      "msg": "User registered sucessfully"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "sumary": "Login",
+        "description": "Essa rota efetua o Login e retorna um JWT.",
+        "tags": ["login"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/login"
+              },
+              "examples": {
+                "login": {
+                  "value": {
+                    "email": "antonio@lima.com.br",
+                    "password": "Antonio123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "A user with this email does not exist or password incorrect",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "emailNotFound": {
+                    "sumary": "User not found",
+                    "value": {
+                      "msg": "A user with this email does not exist.",
+                      "statusCode": 401
+                    }
+                  },
+                  "passwordIncorrect": {
+                    "sumary": "Another reason for 401 error",
+                    "value": {
+                      "msg": "Incorrect email or password",
+                      "statusCode": 401
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "examples": {
+                  "userLogged": {
+                    "value": {
+                      "token": "eyJgbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpFCI6NDMsImlhdCI6MTcwNjE0OTQ3MiwiZXhwIjoxNza2MjM1ODcyfQ.aB4b4wHlCjbLBIDAIRe_wU9pn4nC0f3u3a5MioXPtUI"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/project": {
+      "post": {
+        "sumary": "Cadastro de projeto",
+        "description": "Essa rota efetua a criação de um projeto.",
+        "tags": ["project"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/project"
+              },
+              "examples": {
+                "project": {
+                  "value": {
+                    "title": "Projeto Orange",
+                    "tags": "orange",
+                    "link": "www.projetoorange.com.br",
+                    "description": "Nosso projeto na orange",
+                    "projectCover": {
+                      "file": "Arquivo de imagem."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Project created sucessfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "examples": {
+                  "projectCreated": {
+                    "sumary": "Project created sucessfully",
+                    "value": {
+                      "msg": "Project created sucessfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A project with this tag already exist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "examples": {
+                  "tagAlreadyExist": {
+                    "sumary": "A project with this tag already exist",
+                    "value": {
+                      "msg": "A project with this tag already exist",
+                      "statusCode": 400
+                    }
+                  },
+                  "ErrorNoImage": {
+                    "sumary": "Error no image",
+                    "value": {
+                      "msg": "Error no image",
+                      "statusCode": 400
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "examples": {
+                  "invalidToken": {
+                    "sumary": "no token or invalid token",
+                    "value": {
+                      "msg": "Unauthorized",
+                      "statusCode": 401
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/projects": {
+      "get": {
+        "summary": "Listagem de produtos",
+        "description": "Essa rota efetua a listagem de produtos do usuário.",
+        "tags": ["project"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/project"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "invalidToken": {
+                    "sumary": "no token or invalid token",
+                    "value": {
+                      "msg": "Unauthorized",
+                      "statusCode": 401
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "user": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "secondName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "project": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "string"
+          },
+          "link": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "projectCover": {
+            "type": "string",
+            "format": "binary",
+            "description": "Arquivo de foto a ser enviado."
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
 }
