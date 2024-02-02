@@ -28,7 +28,7 @@ model Projects {
   id Int @id @default(autoincrement())
 
   title        String
-  tags         String @unique
+  tags         String
   link         String
   description  String
   projectCover String
