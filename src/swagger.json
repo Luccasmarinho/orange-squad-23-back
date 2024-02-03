@@ -18,7 +18,7 @@
   "paths": {
     "/register": {
       "post": {
-        "sumary": "Cadastro de usuário",
+        "summary": "Cadastro de usuário",
         "description": "Essa rota será responsável por cadastrar um novo usuário",
         "tags": ["user"],
         "requestBody": {
@@ -83,7 +83,7 @@
     },
     "/login": {
       "post": {
-        "sumary": "Login",
+        "summary": "Login",
         "description": "Essa rota efetua o Login e retorna um JWT.",
         "tags": ["login"],
         "requestBody": {
@@ -148,7 +148,7 @@
     },
     "/project": {
       "post": {
-        "sumary": "Cadastro de projeto",
+        "summary": "Cadastro de projeto",
         "description": "Essa rota efetua a criação de um projeto.",
         "tags": ["project"],
         "security": [{ "bearerAuth": [] }],
@@ -279,6 +279,172 @@
           }
         }
       }
+    },
+    "/project/{id}": {
+      "delete": {
+        "summary": "Remove um projeto pelo id",
+        "description": "Essa rota remove um produto pelo id",
+        "tags": ["project"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id do projeto a ser deletado",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content" 
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "invalidToken": {
+                    "sumary": "no token or invalid token",
+                    "value": {
+                      "msg": "Unauthorized",
+                      "statusCode": 401
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/userdata": {
+      "get": {
+        "summary": "Lista detalhes do usuário",
+        "description": "Essa rota efetua a listagem do usuário através de seu id passado através do token.",
+        "tags": ["user"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "examples": {
+                  "listUser": {
+                    "sumary": "Project created sucessfully",
+                    "value": {
+                      "name": "Antônio Lima",
+                      "userImage": "/tmp/imgavatar.png"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "invalidToken": {
+                    "sumary": "no token or invalid token",
+                    "value": {
+                      "msg": "Unauthorized",
+                      "statusCode": 401
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/refreshToken": {
+      "post": {
+        "summary": "Refresh token",
+        "description": "Essa rota efetua a atualização(refresh) do token.",
+        "tags": ["user"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/refreshToken"
+              },
+              "examples": {
+                "refreshToken": {
+                  "value": {
+                    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzA2OTIxMTIwLCJleHAiOjE3MDcwMDc1MjB9.VFtbjggp-2HJU1c12tAW2X_X5S4QC3rppGnPrxrpqL4"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "examples": {
+                  "updatedToken": {
+                    "value": {
+                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Myw1aWF0IjoxNzA2OTI4Mzk0LCJleHAiOjE3MDcwMDY3OTR9.y3nvWpkyhyfsWQ_iPnorhp4D-HT_ge0G1A0sxTVqvog"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "jwt must be provided or jwt malformed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "examples": {
+                  "jwtMustBeProvided": {
+                    "sumary": "jwt must be provided",
+                    "value": {
+                      "name": "JsonWebTokenError",
+                      "message": "jwt must be provided"
+                    }
+                  },
+                  "jwtMalformed": {
+                    "sumary": "jwt malformed",
+                    "value": {
+                      "name": "JsonWebTokenError",
+                      "message": "jwt malformed"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "invalidToken": {
+                    "sumary": "no token or invalid token",
+                    "value": {
+                      "msg": "Unauthorized",
+                      "statusCode": 401
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -330,6 +496,14 @@
             "type": "string",
             "format": "binary",
             "description": "Arquivo de foto a ser enviado."
+          }
+        }
+      },
+      "refreshToken": {
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string"
           }
         }
       }
