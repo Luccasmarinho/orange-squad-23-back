@@ -315,6 +315,108 @@
             }
           }
         }
+      },
+      "put": {
+        "summary": "Atualiza um projeto pelo id",
+        "description": "Essa rota atualiza um projeto pelo id",
+        "tags": ["project"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id do projeto a ser deletado",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/project"
+              },
+              "examples": {
+                "project": {
+                  "value": {
+                    "title": "Projeto Orange",
+                    "tags": "orange",
+                    "link": "www.projetoorange.com.br",
+                    "description": "Nosso projeto na orange",
+                    "projectCover": {
+                      "file": "Arquivo de imagem."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "examples": {
+                  "projectUpdated": {
+                    "sumary": "Project updated sucessfully",
+                    "value": {
+                      "msg": "Project updated sucessfully",
+                      "statusCode": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Project not found to update or error no image",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "examples": {
+                  "projectNotFound": {
+                    "sumary": "Project not found to update",
+                    "value": {
+                      "msg": "Project not found to update",
+                      "statusCode": 400
+                    }
+                  },
+                  "ErrorNoImage": {
+                    "sumary": "Error no image",
+                    "value": {
+                      "msg": "Error no image",
+                      "statusCode": 400
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "examples": {
+                  "invalidToken": {
+                    "sumary": "no token or invalid token",
+                    "value": {
+                      "msg": "Unauthorized",
+                      "statusCode": 401
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/userdata": {
