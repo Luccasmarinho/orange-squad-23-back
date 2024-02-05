@@ -2,17 +2,16 @@
   "openapi": "3.0.0",
   "info": {
     "title": "API Squad-23",
-    "description": "Adicionar uma descrição",
-    "termsOfService": "http://localhost:3000/terms",
+    "description": "API feita para o hackathon da Fcamara.",
     "contact": {
-      "email": "email@email.com"
+      "email": "luccas88oliveira@gmail.com"
     },
     "version": "1.0.0"
   },
   "servers": [
     {
-      "url": "http://localhost:3000/",
-      "description": "API de teste"
+      "url": "https://orange-squad-23-front-end.vercel.app/",
+      "description": "API"
     }
   ],
   "paths": {
@@ -296,7 +295,7 @@
         ],
         "responses": {
           "204": {
-            "description": "No content" 
+            "description": "No content"
           },
           "401": {
             "description": "Unauthorized",
@@ -389,8 +388,8 @@
                   "ErrorNoImage": {
                     "sumary": "Error no image",
                     "value": {
-                      "msg": "Error no image",
-                      "statusCode": 400
+                      "status": "Error",
+                      "message": "Error no image"
                     }
                   }
                 }
@@ -523,6 +522,90 @@
                     "value": {
                       "name": "JsonWebTokenError",
                       "message": "jwt malformed"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "invalidToken": {
+                    "sumary": "no token or invalid token",
+                    "value": {
+                      "msg": "Unauthorized",
+                      "statusCode": 401
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/uploadImage": {
+      "put": {
+        "summary": "Upload da imagem do usuário",
+        "description": "Essa rota efetua a atualização da imagem do usuário.",
+        "tags": ["user"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "examples": {
+                  "updatedImage": {
+                    "value": {
+                      "msg": "Image uploaded sucessfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "jwt must be provided or jwt malformed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "examples": {
+                  "UserNotFound": {
+                    "sumary": "User not found",
+                    "value": {
+                      "msg": "User not found",
+                      "statusCode": 400
+                    }
+                  },
+                  "ErrorNoImage": {
+                    "sumary": "Error no image",
+                    "value": {
+                      "status": "Error",
+                      "message": "Error no image"
                     }
                   }
                 }
