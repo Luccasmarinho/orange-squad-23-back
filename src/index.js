@@ -16,7 +16,7 @@ app.use(router);
 app.use("/tmp", express.static("tmp"));
 app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use((err, req, res, next) => {
-  if (err instanceof AppError) {
+  if (err instanceof AppError.AppError) {
     return res.status(err.statusCode).json({
       status: "Error",
       message: err.msg,

@@ -11,10 +11,10 @@ model Users {
   id Int @id @default(autoincrement())
 
   name       String
-  secondName String
-  email      String @unique
-  password   String
-  userImage  String @default("/tmp/imgavatar.png")
+  secondName String?
+  email      String  @unique
+  password   String?
+  userImage  String  @default("/tmp/imgavatar.png")
 
   projects Projects[]
 
